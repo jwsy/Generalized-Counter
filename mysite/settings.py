@@ -75,10 +75,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+
+#   Username:    postgres
+#   Password:    51c718a2af10902509a4e6dbfd82cb2eeeb8fb3ff625d0b6
+#   Hostname:    generalized-counter-db.internal
+#   Proxy Port:  5432
+#   PG Port: 5433
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "generalized-counter-db",
+        'USER': 'postgres',
+        'PASSWORD': os.environ['SECRET_KEY'],
+        'HOST': 'generalized-counter-db.internal',
+        'PORT': '5432',
     }
+
 }
 
 
