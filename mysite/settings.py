@@ -22,9 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SETTINGS_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev','https://*.127.0.0.1']
+ALLOWED_HOSTS = ['generalized-counter.fly.dev','https://*.127.0.0.1']
 
 
 # Application definition
@@ -74,20 +75,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
+print(os.environ['SECRET_KEY'])
 
-#   Username:    postgres
-#   Password:    51c718a2af10902509a4e6dbfd82cb2eeeb8fb3ff625d0b6
-#   Hostname:    generalized-counter-db.internal
-#   Proxy Port:  5432
-#   PG Port: 5433
+DATABASES = {
+    # 'sqlite': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "generalized-counter-db",
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': "generalized_counter_db",
         'USER': 'postgres',
         'PASSWORD': os.environ['SECRET_KEY'],
         'HOST': 'generalized-counter-db.internal',
@@ -133,8 +131,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-ALLOWED_HOSTS = ['*']
+# https://stackoverflow.com/questions/64327410/why-my-django-admin-is-not-loading-with-css
+STATIC_URL = 'static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'app/media')
+
 X_FRAME_OPTIONS = '*'
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
